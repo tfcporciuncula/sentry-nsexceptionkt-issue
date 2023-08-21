@@ -28,6 +28,7 @@ kotlin {
         framework {
             baseName = "shared"
         }
+        pod("Sentry", "8.7.0")
     }
     
     sourceSets {
