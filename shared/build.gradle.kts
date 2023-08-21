@@ -42,6 +42,11 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
+        val iosMain by getting {
+            dependencies {
+                implementation("com.rickclephas.kmp:nsexception-kt-sentry:0.1.9")
+            }
+        }
     }
 }
 
