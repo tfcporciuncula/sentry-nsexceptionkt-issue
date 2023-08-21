@@ -28,7 +28,21 @@ kotlin {
         framework {
             baseName = "shared"
         }
-        pod("Sentry", "8.7.1")
+        pod("Sentry") {
+            version = "8.7.1"
+
+            /**
+             * We need this to avoid a conflict between Sentry's `SentryMechanismMeta` class and a class the Kotlin
+             * compiler tries to create with the same name. Without this we can't reference Sentry on the Kotlin side:
+             *
+             * > Task :shared:cinteropSentryIosArm64
+             * Exception in thread "main" java.lang.IllegalArgumentException:
+             * 'SentryMechanismMeta' is going to be declared twice
+             *
+             * Related issue: https://youtrack.jetbrains.com/issue/KT-41709
+             */
+            extraOpts = listOf("-compiler-option", "-DSentryMechanismMeta=SentryMechanismMetaUnavailable")
+        }
     }
     
     sourceSets {
